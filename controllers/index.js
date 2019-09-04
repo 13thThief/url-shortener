@@ -50,8 +50,9 @@ let create = (req, res, next) => {
     })
       
 
+  let hostname = new URL(url).hostname;
   // Check if DNS can resolve the url
-  dns.resolve(url, (err, data) => {
+  dns.resolve(hostname, err => {
     if(err)
       return res
               .status(400) // Bad request
