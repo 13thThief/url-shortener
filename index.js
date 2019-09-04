@@ -29,6 +29,7 @@ app.use('*', (req, res, next) => {
 
 // Error handler
 app.use(function(err, req, res, next) {
+  console.error(err);
   res.sendStatus(500);
 });
 

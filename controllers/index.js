@@ -47,27 +47,26 @@ let create = (req, res, next) => {
     .then(result => {
       if (result.length > 0)
         return res.json({ original_url: url, short_url: result[0].short_url })
-      // Check if DNS can resolve the url
-      if (canDNSResolve(url)) {
-        // If yes, generate short ID for the url
-        API.generateShortID(url)
+    })
+      
+
+  // Check if DNS can resolve the url
+  dns.resolve(url, (err, data) => {
+    if(err)
+      return res
+              .status(400) // Bad request
+              .json({ error: "invalid Hostname" });
+
+      API
+        .generateShortID(url)
         .then( shortID => 
           res.json({ original_url: url, short_url: shortID})
         )
-      }
-      else return res
-                    .status(400) // Bad request
-                    .json({ error: "invalid Hostname" });
-    })
-    .catch( e => {
-      console.error('Error Controller.itExists', e);
-      next(e)
-    })
-}
-  
-function canDNSResolve(url){
-  let hostname = new URL(url).hostname;
-  return dns.resolve(hostname, err => !Boolean(err));
+        .catch( e => {
+          console.error('Error Controller.itExists', e);
+          next(e)
+        }) 
+  });
 }
 
 module.exports = {
