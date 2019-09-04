@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    meta(name="description", content="URL Shortener by Manpreet Krishan")
+    
+    title URL Shortener - API & Microservice
+
+    link(rel="stylesheet" href="/main.css")
+  body(class="container")
+    header(class="header")
+      div(class="wrap")
+        a(class="header-title" href="https://github.com/13thThief/url-shortener") URL Shortener
+        p(class="header-description") Made with Node.js, Express.js, Pug.js, SQLite
+    article(class="content")
+      p.
+        POST a URL to <code>/api/shorturl/new</code> and receive a shortened URL in the JSON response
+        <code>{ "original_url": "https://www.google.com", "short_url": "2d31p" }</code>
+      p.
+        URL should follow the <code>http(s)://(www.)example.com(/more/routes)</code> format and should point to a valid site,
+        else the JSON response will contain an error like <code>{ "error": "invalid URL"}</code>
+      p Visit the shortened url <code>/api/shorturl/<short_url></code> to redirect to the original link
+      form(action="/api/shorturl/new" method="POST")
+        label(for="url_input") URL to be shortened
+        | 
+        input(id="url_input" type="text" name="url" value="https://www.freecodecamp.org")
+        | 
+        input(type="submit" value="POST URL")
+    footer(class="footer")
+      p Created by <a href="https://github.com/13thThief">Manpreet Krishan</a>
